@@ -1,8 +1,9 @@
+import 'dotenv/config';
 const express = require('express')
 const bodyParser = require('body-parser')
 const myCohere = require('./utils/cohere')
 const app = express()
-const port = 3000
+//const port = 3000
 
 // middleware
 app.use(bodyParser.json())
