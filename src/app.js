@@ -3,7 +3,7 @@ const express = require('express')
 const bodyParser = require('body-parser')
 const myCohere = require('./utils/cohere')
 const app = express()
-//const port = 3000
+const port = 3000
 
 // middleware
 app.use(bodyParser.json())
@@ -33,5 +33,5 @@ app.post('/input', (req, res) => {
 })
 
 app.listen(port, () => {
-  console.log(`Example app listening on port ${port}`)
+  console.log(`Example app listening on port 3000`)
 })
