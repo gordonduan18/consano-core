@@ -1,8 +1,10 @@
 const cohere = require("cohere-ai");
-cohere.init('fI8gMsefp8fym7XyxHFX3ihZav4fEjIaAdqlaQS3');
-const classify = async () => {
+
+cohere.init("fI8gMsefp8fym7XyxHFX3ihZav4fEjIaAdqlaQS3");
+
+const classify = async (inputs) => {
   const response = await cohere.classify({
-    inputs: ["this movie was great", "this movie was bad"],
+    inputs: [inputs],
     examples: [
       { text: "love this movie", label: "positive review" },
       {
@@ -39,11 +41,9 @@ const classify = async () => {
       { text: "this movie was nothing special", label: "neutral review" },
     ],
   });
-  for ( const input of response.body.classifications) {
-    console.log("Input:", input.input);
-    console.log("Prediction:",input.prediction);
-    console.log("----------------------------------");
-  }
+  return new Promise((resolve, reject) => {
+    resolve(response.body.classifications);
+  });
 };
 
 module.exports = classify;
