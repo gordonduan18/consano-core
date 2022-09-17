@@ -26,6 +26,7 @@ app.post('/input', (req, res) => {
       parsedResults.push({
         input: result.input,
         prediction: result.prediction,
+        confidences: result.confidences,
        });
     }
     res.send(parsedResults);
