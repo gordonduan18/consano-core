@@ -81,29 +81,29 @@ const classify = async (inputs) => {
   });
 };
 
-const extract = async(input) => {
-    const response = await cohere.generate({
-      prompt: "This program will extract key medical terms from patient passages that describe their symptoms. Here are some examples:\nPassage: I'm feeling a headache, my left knee is hurting, my nose is stuffy but I feel good. Also, I tore my achilles.\n\nExtracted symptoms: headache, left knee pain, nasal congestion, torn achilles\n\n--\n\nPassage: My mom visited today and it was good to see her. My dog died. The hospital food is surprisingly decent. The numbness in my right ear is gone but I think I have the flu. I'm coughing a lot and feeling really tired.\n\nExtracted symptoms: cough, fatigue\n\n--\n\nPassage: It looks warmer outside today. I'm still having diarrhea, but the pressure in my head is gone. The blood from my wound is still there and my vision is blurry.\n\nExtracted symptoms: diarrhea, headache, wound, blurry vision\n\n--\n\n\Passage: Yesterday, I saw Gorgina at the grovery store, but something seemed wrong. I couldn't really understand what she was saying to me. What was weirder was that one side of her face wasn't moving. She was stumbling into shelves and squinting a lot.\n\nExtracted symptoms: stroke, vision loss\n\n--\n\nPassage: Today, I was taking a walk around the neighbouhood when passed my best friend. I had a conversation with her, but she looked a little off balance. I'm not sure what it is but the was stumbling, and squinting a lot. One side of her face is drooping and it became difficult to understand her speaking.\n\nExtracted symptoms: stroke, loss of vision\n\n--\n\nPassage: I tore my meniscus and broke my tibia\n\nExtracted symptoms: torn meniscus, fractured tibia\n\n--\n\nPassage: " + input + "\n\nExtracted symptoms: ",
-      model: 'large',
-      max_tokens: 10,
-      temperature: 0.5,
-      stop_sequences: ['--'],
-      p: 1.0,
-    });
-    return new Promise((resolve, reject) => {
-      if (!response.body) {
-        reject("Error during cohere.classify");
-      }
-      const returnText = response.body.generations[0].text;
-      if (returnText.slice(-2) == "--") {
-        resolve(returnText.slice(0, -2).trim())
-      } else {
-        resolve(returnText);
-      }
-    });
-  
-  
+const extract = async (input) => {
+  const response = await cohere.generate({
+    prompt:
+      "This program will extract key medical terms from patient passages that describe their symptoms. Here are some examples:\nPassage: I'm feeling a headache, my left knee is hurting, my nose is stuffy but I feel good. Also, I tore my achilles.\n\nExtracted symptoms: headache, left knee pain, nasal congestion, torn achilles\n\n--\n\nPassage: My mom visited today and it was good to see her. My dog died. The hospital food is surprisingly decent. The numbness in my right ear is gone but I think I have the flu. I'm coughing a lot and feeling really tired.\n\nExtracted symptoms: cough, fatigue\n\n--\n\nPassage: It looks warmer outside today. I'm still having diarrhea, but the pressure in my head is gone. The blood from my wound is still there and my vision is blurry.\n\nExtracted symptoms: diarrhea, headache, wound, blurry vision\n\n--\n\nPassage: Yesterday, I saw Gorgina at the grovery store, but something seemed wrong. I couldn't really understand what she was saying to me. What was weirder was that one side of her face wasn't moving. She was stumbling into shelves and squinting a lot.\n\nExtracted symptoms: stroke, vision loss\n\n--\n\nPassage: Today, I was taking a walk around the neighbouhood when passed my best friend. I had a conversation with her, but she looked a little off balance. I'm not sure what it is but the was stumbling, and squinting a lot. One side of her face is drooping and it became difficult to understand her speaking.\n\nExtracted symptoms: stroke, loss of vision\n\n--\n\nPassage: I tore my meniscus and broke my tibia\n\nExtracted symptoms: torn meniscus, fractured tibia\n\n--\n\nPassage: " +
+      input +
+      "\n\nExtracted symptoms: ",
+    model: "large",
+    max_tokens: 10,
+    temperature: 0.5,
+    stop_sequences: ["--"],
+    p: 1.0,
+  });
+  return new Promise((resolve, reject) => {
+    if (!response.body) {
+      reject("Error during cohere.classify");
+    }
+    const returnText = response.body.generations[0].text;
+    if (returnText.slice(-2) == "--") {
+      resolve(returnText.slice(0, -2).trim());
+    } else {
+      resolve(returnText);
+    }
+  });
+};
 
-}
-
-module.exports = { classify, extract};
+module.exports = { classify, extract };
