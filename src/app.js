@@ -12,6 +12,7 @@ app.use(bodyParser.urlencoded({ extended: true }))
 
 app.get('/', (req, res) => {
   res.send('Hello World!')
+  console.log(process.env.DATABASE_URL);
 })
 
 app.post('/input', (req, res) => {
@@ -32,6 +33,6 @@ app.post('/input', (req, res) => {
   });
 })
 
-app.listen(port, () => {
-  console.log(`Example app listening on port ${port}`)
+app.listen(process.env.PORT, () => {
+  console.log(`Example app listening on port ${process.env.PORT}`)
 })
