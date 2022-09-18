@@ -3,17 +3,18 @@ const express = require('express')
 const bodyParser = require('body-parser')
 const myCohere = require('./utils/cohere')
 const app = express()
-const port = 3000
 
 // middleware
 app.use(bodyParser.json())
 app.use(bodyParser.urlencoded({ extended: true }))
 
 
+// Home Page
 app.get('/', (req, res) => {
   res.send('Hello World!')
 })
 
+// Classify Inputs
 app.post('/input', (req, res) => {
   if (!req.body.inputs) {
     res.send({
