@@ -13,12 +13,10 @@
     "body-parser": "^1.20.0",
     "cohere-ai": "^4.3.0",
     "dotenv": "^16.0.2",
-    "express": "^4.18.1"
+    "express": "^4.18.1",
+    "pg": "^8.8.0"
   },
   "devDependencies": {
-    "@babel/core": "^7.19.1",
-    "@babel/node": "^7.19.1",
-    "@babel/preset-env": "^7.19.1",
     "nodemon": "^2.0.20"
   },
   "repository": {
