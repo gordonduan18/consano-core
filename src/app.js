@@ -2,6 +2,16 @@ require('dotenv').config()
 const express = require('express')
 const bodyParser = require('body-parser')
 const myCohere = require('./utils/cohere')
+const Sequelize = require('sequelize-cockroachdb');
+
+const connectionString = process.env.DATABASE_URL;
+const sequelize = new Sequelize(connectionString, {
+  logging: false,
+  dialectOptions: {
+    application_name: "docs_simplecrud_node-sequelize"
+  }
+});
+
 const app = express()
 
 // middleware
@@ -34,6 +44,53 @@ app.post('/input', (req, res) => {
   }).catch( error => {
     console.log(error);
   });
+})
+
+const MyEntries = sequelize.define("myentries", {
+  id: {
+    type: Sequelize.INTEGER,
+    autoIncrement: true,
+    primaryKey: true,
+  },
+  firstName: {
+    type: Sequelize.TEXT,
+  },
+  lastName: {
+    type: Sequelize.TEXT,
+  },
+  passage: {
+    type: Sequelize.TEXT,
+  },
+  score: {
+    type: Sequelize.FLOAT,
+  }
+});
+
+// Get all Entries for one user
+app.get('/entries', (req, res) => {
+  MyEntries.sync({
+    force: false,
+  }).then( () => {
+    return MyEntries.findAll();
+  }).then( (people) => {
+    res.send(people);
+  })
+})
+
+// Insert Entry into DB
+app.post('/entries', (req, res) => {
+  console.log(req.body);
+  MyEntries.sync({
+    force: false,
+  }).then( () => {
+    return MyEntries.bulkCreate([
+      { firstName, lastName, passage, score } = req.body
+    ])
+  }).catch(err => {
+    console.log("error: ", err);
+  });
+
+  res.send("Entries have been created");
 })
 
 app.listen(process.env.PORT, () => {
