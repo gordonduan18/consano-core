@@ -74,6 +74,9 @@ const classify = async (inputs) => {
     ],
   });
   return new Promise((resolve, reject) => {
+    if (!response.body) {
+      reject("Error during cohere.classify");
+    }
     resolve(response.body.classifications);
   });
 };

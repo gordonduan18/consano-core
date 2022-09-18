@@ -30,6 +30,8 @@ app.post('/input', (req, res) => {
        });
     }
     res.send(parsedResults);
+  }).catch( error => {
+    console.log(error);
   });
 })
 
