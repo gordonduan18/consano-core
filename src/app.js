@@ -1,4 +1,4 @@
-import 'dotenv/config';
+require('dotenv').config()
 const express = require('express')
 const bodyParser = require('body-parser')
 const myCohere = require('./utils/cohere')
@@ -12,7 +12,6 @@ app.use(bodyParser.urlencoded({ extended: true }))
 
 app.get('/', (req, res) => {
   res.send('Hello World!')
-  console.log(process.env.DATABASE_URL);
 })
 
 app.post('/input', (req, res) => {
