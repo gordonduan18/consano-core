@@ -95,7 +95,7 @@ app.post('/entries', (req, res) => {
     force: false,
   }).then( () => {
     return MyEntries.bulkCreate([
-      { firstName, lastName, passage, score } = req.body
+      { firstName, lastName, passage, score, symptoms } = req.body
     ])
   }).catch(err => {
     console.log("error: ", err);
