@@ -31,7 +31,7 @@ app.post('/input', (req, res) => {
       error: 'you must provide a valid input'
     })
   }
-  myCohere(req.body.inputs).then( results => {
+  myCohere.classify(req.body.inputs).then( results => {
     let parsedResults = [];
     for ( const result of results) {
       parsedResults.push({
@@ -91,6 +91,21 @@ app.post('/entries', (req, res) => {
   });
 
   res.send("Entries have been created");
+})
+
+
+app.post('/extract', (req, res) => {
+  if (!req.body.inputs) {
+    res.send({
+      error: 'you must provide a valid input'
+    })
+  }
+  console.log(myCohere.extract(req.body.inputs));
+  myCohere.extract(req.body.inputs).then(result => {
+    res.send(result);
+  }).catch(error => {
+    console.log(error);
+  })
 })
 
 app.listen(process.env.PORT, () => {
