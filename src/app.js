@@ -32,12 +32,20 @@ app.post('/input', (req, res) => {
     })
   }
   myCohere.classify(req.body.inputs).then( results => {
+    console.log(results);
     let parsedResults = [];
     for ( const result of results) {
+      let myScore = 0;
+      for ( const label of result.confidences ) {
+        if (label.option == "bad") myScore += (0.01 * label.confidence);
+        else if (label.option == "good") myScore += label.confidence;
+        else if (label.option == "okay") myScore += (0.5 * label.confidence);
+      }
+      myScore *= 100;
       parsedResults.push({
         input: result.input,
         prediction: result.prediction,
-        confidences: result.confidences,
+        score: myScore,
        });
     }
     res.send(parsedResults);
@@ -63,10 +71,13 @@ const MyEntries = sequelize.define("myentries", {
   },
   score: {
     type: Sequelize.FLOAT,
+  },
+  symptoms: {
+    type: Sequelize.TEXT,
   }
 });
 
-// Get all Entries for one user
+// Get all Entries
 app.get('/entries', (req, res) => {
   MyEntries.sync({
     force: false,
